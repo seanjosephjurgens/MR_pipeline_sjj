@@ -92,7 +92,7 @@ cat('Reading in UKBB 5k LD reference curated by Sean...\n')
 # Read in LD reference file
 ldfile <- NULL
 for(CHR in c(1:22)){
-        LDreference_prefix_bim <- paste0('/medpop/afib/sjurgens/UKBB_ldref/merged/v2/UKBB_ldref_chr',CHR, '_v2.bim')
+	LDreference_prefix_bim <- paste0(LD_reference_prefix, CHR, LD_reference_suffix, '.bim')
 	ldfile <- rbind(ldfile, fread(LDreference_prefix_bim, stringsAsFactors=F, data.table=F, header=F))
 }
 ldfile <- as.data.frame(ldfile$V2)
@@ -260,9 +260,12 @@ write.table(Clumpfile, file=paste0(wd,phenotype,'_Clumpfile.txt'), col.names=T, 
 
 for(CHR in c(1:22)){
         cat('\t\tBusy with chr', CHR, '...\n')
-        LDreference_prefix_bed <- paste0('/medpop/afib/sjurgens/UKBB_ldref/merged/v2/UKBB_ldref_chr',CHR, '_v2.bed')
-        LDreference_prefix_fam <- paste0('/medpop/afib/sjurgens/UKBB_ldref/merged/v2/UKBB_ldref_chr',CHR, '_v2.fam')
-        LDreference_prefix_bim <- paste0('/medpop/afib/sjurgens/UKBB_ldref/merged/v2/UKBB_ldref_chr',CHR, '_v2.bim')
+        #LDreference_prefix_bed <- paste0('/medpop/afib/sjurgens/UKBB_ldref/merged/v2/UKBB_ldref_chr',CHR, '_v2.bed')
+        #LDreference_prefix_fam <- paste0('/medpop/afib/sjurgens/UKBB_ldref/merged/v2/UKBB_ldref_chr',CHR, '_v2.fam')
+        #LDreference_prefix_bim <- paste0('/medpop/afib/sjurgens/UKBB_ldref/merged/v2/UKBB_ldref_chr',CHR, '_v2.bim')
+	LDreference_prefix_bed <- paste0(LD_reference_prefix, CHR, LD_reference_suffix, '.bed')
+	LDreference_prefix_fam <- paste0(LD_reference_prefix, CHR, LD_reference_suffix, '.fam')
+	LDreference_prefix_bim <- paste0(LD_reference_prefix, CHR, LD_reference_suffix, '.bim')
         cat('   ... p==',pval_thresh,'and r2==',r2_thresh,'...\n')
         system(paste0('/medpop/afib/software/plink1.9/Aug16_2016/plink --bed ',LDreference_prefix_bed, '  --fam ', LDreference_prefix_fam, '  --bim ', LDreference_prefix_bim,
               ' --clump ',wd,phenotype,'_Clumpfile.txt --clump-field P --clump-p1 ', pval_thresh, ' --clump-p2 ', pval_thresh,
