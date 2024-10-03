@@ -28,7 +28,8 @@ option_list <- list(
   make_option("--distance_cutoff", type="numeric",default=10000),
   make_option("--r2_cutoff", type="numeric",default=0.0005),
   make_option("--LD_reference_prefix", type="character", default="/medpop/afib/sjurgens/UKBB_ldref/merged/v2/UKBB_ldref_chr"),
-  make_option("--LD_reference_suffix", type="character", default="_v2")
+  make_option("--LD_reference_suffix", type="character", default="_v2"),
+  make_option("--PLINK_binary_file", type="character", default="/medpop/afib/software/plink1.9/Aug16_2016/plink")
 )
 parser <- OptionParser(usage="%prog [options]", option_list=option_list)
 args <- parse_args(parser, positional_arguments = 0)
@@ -61,6 +62,7 @@ distance_cutoff <- opt$distance_cutoff
 r2_cutoff <- opt$r2_cutoff
 LD_reference_prefix <- opt$LD_reference_prefix
 LD_reference_suffix <- opt$LD_reference_suffix
+plink_bin_file <- opt$PLINK_binary_file
 
 #### CAUSE MR analysis, setup ####
 #devtools::install_github("jean997/cause@v1.2.0", lib='~/R/x86_64-pc-linux-gnu-library/4.0')
@@ -271,7 +273,7 @@ for(CHR in c(1:22)){
 	LDreference_prefix_fam <- paste0(LD_reference_prefix, CHR, LD_reference_suffix, '.fam')
 	LDreference_prefix_bim <- paste0(LD_reference_prefix, CHR, LD_reference_suffix, '.bim')
         cat('   ... p==',pval_thresh,'and r2==',r2_thresh,'...\n')
-        system(paste0('/medpop/afib/software/plink1.9/Aug16_2016/plink --bed ',LDreference_prefix_bed, '  --fam ', LDreference_prefix_fam, '  --bim ', LDreference_prefix_bim,
+        system(paste0(plink_bin_file, '  --bed ',LDreference_prefix_bed, '  --fam ', LDreference_prefix_fam, '  --bim ', LDreference_prefix_bim,
               ' --clump ',wd,phenotype,'_Clumpfile.txt --clump-field P --clump-p1 ', pval_thresh, ' --clump-p2 ', pval_thresh,
               ' --clump-r2  ', r2_thresh, '  --clump-kb ', distance, ' --out ',wd,phenotype,'_chr', CHR, '_Clumped_p',pval_thresh,'_r2', r2_thresh, '.txt'))
         if(file.exists(paste0(wd,phenotype,'_chr', CHR, '_Clumped_p',pval_thresh,'_r2', r2_thresh, '.txt.clumped'))){
