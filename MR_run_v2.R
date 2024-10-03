@@ -62,6 +62,7 @@ distance_cutoff <- opt$distance_cutoff
 r2_cutoff <- opt$r2_cutoff
 LD_reference_prefix <- opt$LD_reference_prefix
 LD_reference_suffix <- opt$LD_reference_suffix
+plink_bin_file <- opt$PLINK_binary_file
 
 #### CAUSE MR analysis, setup ####
 #devtools::install_github("jean997/cause@v1.2.0", lib='~/R/x86_64-pc-linux-gnu-library/4.0')
