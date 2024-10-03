@@ -4,5 +4,5 @@ A Mendelian Randomization (MR) pipeline that takes GWAS summary statistics and p
 The pipeline was used in various publications:
 ```
 Jurgens et al.  Genome-wide association study reveals mechanisms underlying dilated cardiomyopathy and myocardial resilience. Nature Genetics (accepted for publication).
-Weng et al.  Common and rare variant contributions to bradyarrhythmia. Nature Genetics (accepted for publication).
+Weng et al.  Common and rare variant contributions to bradyarrhythmias. Nature Genetics (accepted for publication).
 ```
